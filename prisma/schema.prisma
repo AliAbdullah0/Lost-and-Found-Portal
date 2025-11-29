@@ -1,0 +1,51 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+
+model Student {
+  id String @id @default(cuid())
+  email String @unique
+  enrollment String @unique
+  LostItems LostItem[]
+  FoundItems FoundItem[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model LostItem {
+  id String @id @default(cuid())
+  name String
+  description String
+  image String?
+  time DateTime?
+  location String
+  contactNo BigInt?
+  creatorId String
+  creator Student @relation(fields: [creatorId],references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model FoundItem {
+  id String @id @default(cuid())
+  name String
+  description String
+  image String?
+  location String
+  time DateTime?
+  contactNo BigInt?
+  creatorId String
+  creator Student @relation(fields: [creatorId],references: [id])
+}
