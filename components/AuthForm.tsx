@@ -42,6 +42,7 @@ const AuthForm = () => {
       if (res.success) {
         toast.success(res.message)
         router.push("/")
+        window.location.reload();
       }
     } catch {
       toast.error("Something went wrong")
