@@ -87,9 +87,6 @@ const ProfileButton = () => {
           <MenubarItem onClick={()=>router.push("/create")} className="rounded-none">Create</MenubarItem>
           <MenubarItem onClick={()=>router.push("/lost-items")} className="rounded-none">Lost Items</MenubarItem>
           <MenubarItem onClick={()=>router.push("/found")} className="rounded-none">Found Items</MenubarItem>
-          <MenubarItem className="border-b rounded-none" onClick={() => router.push("/profile")}>
-            Profile
-          </MenubarItem>
           <MenubarItem onClick={handleLogout} className="rounded-none">Logout</MenubarItem>
         </MenubarContent>
       </MenubarMenu>
