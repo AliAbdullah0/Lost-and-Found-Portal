@@ -28,10 +28,11 @@ export const sendClaimEmail = async ({
   message: string
 }) => {
   try {
-    const item = await prisma.lostItem.findUnique({
+    const item = await prisma.foundItem.findUnique({
       where: { id: itemId },
       include: { creator: true },
     })
+    console.log(item)
 
     if (!item || !item.creator.email) {
       return { success: false, message: "Item not found" }
@@ -61,7 +62,7 @@ export const sendClaimEmail = async ({
       `,
     })
 
-    return { success: true, message: "Claim sent to owner successfully" }
+    return { success: true, message: "Claim sent to Founder successfully" }
 
   } catch (error) {
     console.log(error)
