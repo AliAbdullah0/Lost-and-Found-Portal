@@ -195,4 +195,44 @@ export const getFoundItems = async ()=>{
     }
 }
 
+export const deleteLostItem = async (id:string)=>{
+    try {
+        await prisma.lostItem.delete({
+            where:{
+                id
+            }
+        })
+        return {
+            success:true,
+            message:"Item deleted successfully"
+        }
+    } catch (error) {
+        return {
+            success:false,
+            message:`Something went wrong while deleting Item ! 
+             ${error}
+            `
+        }   
+    }
+}
 
+export const deleteFoundItem = async (id:string)=>{
+    try {
+        await prisma.foundItem.delete({
+            where:{
+                id
+            }
+        })
+        return {
+            success:true,
+            message:"Item deleted successfully"
+        }
+    } catch (error) {
+        return {
+            success:false,
+            message:`Something went wrong while deleting Item ! 
+             ${error}
+            `
+        }   
+    }
+}

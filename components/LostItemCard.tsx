@@ -1,7 +1,11 @@
 "use client"
 
-import { MapPin, Phone, Clock } from "lucide-react"
+import { MapPin, Phone, Clock, Trash2 } from "lucide-react"
 import IFoundItDialog from "./IFoundItDialog"
+import { deleteLostItem } from "@/actions/student.actions"
+import { toast } from "sonner"
+import { useTransition } from "react"
+import { Button } from "./ui/button"
 
 interface ItemInput {
   id: string
@@ -12,46 +16,78 @@ interface ItemInput {
   location: string
   contactNo?: number
   creatorEmail: string
+  creatorId: string
 }
 
-const LostItemCard = ({ item }: { item: ItemInput }) => {
+const LostItemCard = ({
+  item,
+  currentStudentId
+}: {
+  item: ItemInput
+  currentStudentId: string | undefined
+}) => {
+
+  const [isPending, startTransition] = useTransition()
+
+  const isOwner = currentStudentId === item.creatorId
+
+  const handleDelete = () => {
+    startTransition(async () => {
+      const res = await deleteLostItem(item.id)
+
+      if (res.success) {
+        toast.success("Item deleted")
+        window.location.reload()
+      } else {
+        toast.error(res.message)
+      }
+    })
+  }
+
   return (
     <div className="w-full max-w-xs bg-white border rounded-lg shadow-sm hover:shadow-md transition overflow-hidden">
-
       <div className="w-full h-40 bg-gray-100 flex items-center justify-center overflow-hidden">
-  {item.image && (
-    <img
-      src={item.image}
-      className="w-full h-full object-cover"
-      alt={item.name}
-    />
-  )}
-</div>
+        {item.image && (
+          <img
+            src={item.image}
+            className="w-full h-full object-cover"
+            alt={item.name}
+          />
+        )}
+      </div>
 
       <div className="flex justify-between items-center bg-gray-900 px-3 py-2">
-        <h2 className="text-white text-sm font-semibold">
-          Lost Item
-        </h2>
+        <h2 className="text-white text-sm font-semibold">Lost Item</h2>
+
+        {isOwner && (
+          <Button
+            onClick={handleDelete}
+            disabled={isPending}
+            variant="ghost"
+            className="text-white hover:text-destructive"
+            title="Delete Item"
+          >
+            <Trash2 size={18} />
+          </Button>
+        )}
       </div>
 
       <div className="px-3 py-3 space-y-1.5 text-sm">
 
-        <h1 className="font-semibold text-base truncate">
-          {item.name}
-        </h1>
+        <h1 className="font-semibold text-base truncate">{item.name}</h1>
 
         <p className="text-gray-600 text-xs line-clamp-2">
           {item.description}
         </p>
 
         <div className="flex items-center gap-2 text-gray-700">
-          <MapPin className="w-4 h-4 shrink-0" />
+          <MapPin className="w-4 h-4 shrink-0"/>
           <span className="truncate">{item.location}</span>
         </div>
 
         {item.time && (
           <div className="flex items-center gap-2 text-gray-700">
-            <Clock className="w-4 h-4 shrink-0" />
+            <Clock className="w-4 h-4 shrink-0"/>
             <span className="text-xs">
               {new Date(item.time).toLocaleString()}
             </span>
@@ -60,20 +96,16 @@ const LostItemCard = ({ item }: { item: ItemInput }) => {
 
         {item.contactNo && (
           <div className="flex items-center gap-2 text-gray-700">
-            <Phone className="w-4 h-4 shrink-0" />
+            <Phone className="w-4 h-4 shrink-0"/>
             <span>{item.contactNo}</span>
           </div>
         )}
-
       </div>
 
-      <div className="">
-        <IFoundItDialog
-          itemName={item.name}
-          creatorEmail={item.creatorEmail}
-          key={item.id}
-        />
-      </div>
+      <IFoundItDialog
+        itemName={item.name}
+        creatorEmail={item.creatorEmail}
+      />
 
     </div>
   )

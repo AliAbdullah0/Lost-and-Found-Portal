@@ -1,7 +1,11 @@
 "use client"
 
-import { MapPin, Phone, Clock } from "lucide-react"
+import { MapPin, Phone, Clock, Trash2 } from "lucide-react"
 import ClaimDialog from "./ClaimDialog"
+import { useTransition } from "react"
+import { deleteFoundItem } from "@/actions/student.actions"
+import { toast } from "sonner"
+import { Button } from "./ui/button"
 
 interface ItemInput {
   id: string
@@ -11,9 +15,26 @@ interface ItemInput {
   time?: Date
   location: string
   contactNo?: number
+  creatorId: string
 }
 
-const FoundItemCard = ({ item }: { item: ItemInput }) => {
+const FoundItemCard = ({ item,currentStudentId }: { item: ItemInput,currentStudentId:string }) => {
+  const [isPending, startTransition] = useTransition()
+
+  const isOwner = currentStudentId === item.creatorId
+
+  const handleDelete = () => {
+    startTransition(async () => {
+      const res = await deleteFoundItem(item.id)
+
+      if (res.success) {
+        toast.success("Item deleted")
+        window.location.reload()
+      } else {
+        toast.error(res.message)
+      }
+    })
+  }
   return (
     <div className="w-full max-w-xs bg-white border rounded-lg shadow-sm hover:shadow-md transition overflow-hidden">
 
@@ -29,6 +50,17 @@ const FoundItemCard = ({ item }: { item: ItemInput }) => {
         <h2 className="text-white text-sm font-semibold">
           Found Item
         </h2>
+        {isOwner && (
+          <Button
+            onClick={handleDelete}
+            disabled={isPending}
+            variant="ghost"
+            className="text-white hover:text-destructive"
+            title="Delete Item"
+          >
+            <Trash2 size={18} />
+          </Button>
+        )}
       </div>
 
       <div className="px-3 py-3 space-y-1.5 text-sm">

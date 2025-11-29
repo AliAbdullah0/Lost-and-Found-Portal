@@ -1,8 +1,8 @@
-import { getLostItems } from "@/actions/student.actions"
+import { getCurrentStudentId, getLostItems } from "@/actions/student.actions"
 import LostItemCard from "@/components/LostItemCard"
 
 const LostItems = async () => {
-
+  const studentId = await getCurrentStudentId()
   const res = await getLostItems()
 
   if (!res.success || !res.lostItems?.length) {
@@ -33,8 +33,10 @@ const LostItems = async () => {
               location: item.location,
               time: item.time || undefined,
               contactNo: item.contactNo ? Number(item.contactNo) : undefined,
-              creatorEmail:item.creator.email
+              creatorEmail:item.creator.email,
+              creatorId:item.creator.id,
             }}
+            currentStudentId={studentId!}
           />
         ))}
       
