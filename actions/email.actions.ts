@@ -32,7 +32,6 @@ export const sendClaimEmail = async ({
       where: { id: itemId },
       include: { creator: true },
     })
-    console.log(item)
 
     if (!item || !item.creator.email) {
       return { success: false, message: "Item not found" }
