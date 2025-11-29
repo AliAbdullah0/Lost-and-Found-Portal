@@ -4,6 +4,7 @@ import { useState } from "react"
 import { sendIfoundItEmail } from "@/actions/email.actions"
 import { toast } from "sonner"
 import { send } from "node:process"
+import { Button } from "./ui/button"
 
 interface Props {
   creatorEmail: string
@@ -81,12 +82,15 @@ const IFoundItDialog = ({ creatorEmail, itemName }: Props) => {
                 className="w-full border p-2 rounded h-24"
               />
 
-              <button
+            <div className="flex gap-2">
+              <Button
                 disabled={loading}
-                className="w-full bg-emerald-600 text-white py-2 rounded"
+                className=" bg-emerald-600 hover:bg-emerald-600/80 text-white py-2 rounded"
               >
                 {loading ? "Sending..." : "Send Message"}
-              </button>
+              </Button>
+              <Button onClick={() => setOpen(false)}>Cancel</Button>
+            </div>
             </form>
           </div>
         </div>
