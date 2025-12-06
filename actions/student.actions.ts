@@ -41,6 +41,7 @@ export const createStudent = async ({email,enrollment}:StudentInput) => {
         })
         const cookie = await cookies()
         cookie.set("student",newStudent.id)
+        redirect("/")
         return {
             success:true,
             message:"Student created successfully"
