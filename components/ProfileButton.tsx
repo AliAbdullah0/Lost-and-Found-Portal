@@ -10,6 +10,7 @@ import {
   MenubarItem,
 } from "./ui/menubar"
 import { Avatar, AvatarFallback } from "./ui/avatar"
+import { Menu } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { useEffect, useState } from "react"
@@ -31,19 +32,16 @@ const ProfileButton = () => {
   const router = useRouter()
 
   useEffect(() => {
-    console.log("fetching student")
     const fetchStudent = async () => {
       try {
-    console.log("in try catch")
         const currentStudent: StudentResponse = await getCurrentStudent()
+
         if (currentStudent.success && currentStudent.student) {
-            console.log("current:",currentStudent)
           setStudent(currentStudent.student)
         } else {
           setStudent(null)
         }
       } catch (error) {
-    console.log(error)
         setStudent(null)
       } finally {
         setLoading(false)
@@ -65,7 +63,7 @@ const ProfileButton = () => {
 
   if (loading) {
     return (
-      <div className="w-10 h-10 rounded-full bg-gray-400 animate-pulse" />
+      <div className="w-10 h-10 rounded-md bg-gray-400 animate-pulse" />
     )
   }
 
@@ -74,21 +72,47 @@ const ProfileButton = () => {
   }
 
   return (
-    <Menubar className="flex items-center">
+    <Menubar className="border-none shadow-none">
       <MenubarMenu>
-        <MenubarTrigger asChild className="shadow-none border-none">
-          <Avatar className="cursor-pointer shadow-none">
-            <AvatarFallback className="bg-black shadow-none text-white p-3">
-              {student.email.slice(0, 1).toUpperCase()}
-            </AvatarFallback>
-          </Avatar>
+        <MenubarTrigger asChild className="border-none shadow-none">
+          <button className="h-9 w-9 flex items-center justify-center rounded-md hover:bg-gray-100 transition">
+            <Menu className="h-5 w-5" />
+          </button>
         </MenubarTrigger>
-        <MenubarContent align="end">
-          <MenubarItem onClick={()=>router.push("/create")} className="rounded-none">Create</MenubarItem>
-          <MenubarItem onClick={()=>router.push("/lost-items")} className="rounded-none">Lost Items</MenubarItem>
-          <MenubarItem onClick={()=>router.push("/found")} className="rounded-none">Found Items</MenubarItem>
-          <MenubarItem onClick={handleLogout} className="rounded-none">Logout</MenubarItem>
+
+        <MenubarContent align="end" className="p-2 min-w-[200px]">
+          <div className="flex items-center gap-3 px-2 py-2 border-b mb-1">
+            <Avatar>
+              <AvatarFallback className="bg-black text-white">
+                {student.email.slice(0, 1).toUpperCase()}
+              </AvatarFallback>
+            </Avatar>
+
+            <div className="text-sm truncate">
+              {student.email}
+            </div>
+          </div>
+          <MenubarItem onClick={() => router.push("/create")}>
+            Create
+          </MenubarItem>
+
+          <MenubarItem onClick={() => router.push("/lost-items")}>
+            Lost Items
+          </MenubarItem>
+
+          <MenubarItem onClick={() => router.push("/found")}>
+            Found Items
+          </MenubarItem>
+
+          <MenubarItem
+            onClick={handleLogout}
+            className="text-red-500 focus:text-red-500"
+          >
+            Logout
+          </MenubarItem>
+
         </MenubarContent>
+
       </MenubarMenu>
     </Menubar>
   )

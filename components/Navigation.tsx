@@ -1,5 +1,6 @@
 import Link from "next/link"
 import ProfileButton from "./ProfileButton"
+import { Button } from "./ui/button"
 
 const Navigation = () => {
   return (
@@ -10,6 +11,8 @@ const Navigation = () => {
         </Link>
       </div>
       <div className="flex items-center gap-3">
+        <Button asChild variant={"outline"}><Link href={'/'}>Home</Link>
+        </Button>
         <ProfileButton />
       </div>
 
