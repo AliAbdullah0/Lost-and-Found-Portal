@@ -41,7 +41,7 @@ const IFoundItDialog = ({ creatorEmail, itemName }: Props) => {
     <>
       <button
         onClick={() => setOpen(true)}
-        className="w-full mt-3 bg-emerald-600/70 hover:bg-emerald-700/60 text-white rounded-b-lg py-2"
+        className="w-full mt-3 bg-black hover:bg-black/80 transition text-sm py-600/70 text-white rounded-lg py-2"
       >
         I Found It
       </button>
