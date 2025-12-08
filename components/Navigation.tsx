@@ -6,7 +6,7 @@ const Navigation = () => {
   return (
     <nav className="w-full h-16 px-6 flex items-center justify-between border-b border-gray-200">
       <div className="flex items-center gap-2">
-        <Link href="/" className="text-xl font-black">
+        <Link href="/" className="md:text-xl text-lg font-black">
           Bahria Lost & Found.
         </Link>
       </div>
