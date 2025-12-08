@@ -4,7 +4,7 @@ import { Button } from "./ui/button"
 
 const Navigation = () => {
   return (
-    <nav className="w-full h-16 px-6 flex items-center justify-between border-b border-gray-200">
+    <nav className="w-full h-16 bg-white px-6 flex items-center justify-between border-b border-gray-200">
       <div className="flex items-center gap-2">
         <Link href="/" className="md:text-xl font-black">
           Bahria Lost & Found.
