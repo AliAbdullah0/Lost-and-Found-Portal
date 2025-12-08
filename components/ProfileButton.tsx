@@ -68,7 +68,7 @@ const ProfileButton = () => {
   }
 
   if (!student) {
-    return <Button onClick={() => router.push("/register")}>Register</Button>
+    return <Button size={"sm"} onClick={() => router.push("/register")}>Register</Button>
   }
 
   return (

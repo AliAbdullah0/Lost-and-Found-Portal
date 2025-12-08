@@ -66,7 +66,6 @@ const FoundItems = () => {
           />
         </div>
 
-        {/* Loading State */}
         {loading && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {Array.from({ length: 8 }).map((_, i) => (
@@ -74,8 +73,6 @@ const FoundItems = () => {
             ))}
           </div>
         )}
-
-        {/* Empty / No Results State */}
         {!loading && filteredItems.length === 0 && (
           <div className="text-center py-20">
             <div className="bg-emerald-100 border-2 border-dashed border-emerald-300 rounded-xl w-28 h-28 mx-auto mb-6 flex items-center justify-center">
