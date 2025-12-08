@@ -33,8 +33,8 @@ export default function CursorBlobBackground() {
         className="pointer-events-none fixed inset-0 -z-10 opacity-70"
         style={{ transform: "translate(-50%, -50%)" }}
       >
-        <div className="absolute left-1/2 top-1/2 h-96 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-br from-purple-500/30 via-pink-400/25 to-cyan-500/30 blur-3xl" />
-        <div className="absolute left-1/2 top-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-t from-blue-500/20 to-purple-400/30 blur-3xl animate-pulse" />
+        <div className="absolute left-1/2 top-1/2 h-96 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full bg-linear-to-br from-purple-500/30 via-pink-400/25 to-cyan-500/30 blur-3xl" />
+        <div className="absolute left-1/2 top-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-linear-to-t from-blue-500/20 to-purple-400/30 blur-3xl animate-pulse" />
       </div>
 
       {/* Optional subtle grain */}
